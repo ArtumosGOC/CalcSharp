@@ -1,0 +1,29 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<OutputType>Library</OutputType>
+		<TargetFramework>net8.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<PublishAot>true</PublishAot>
+		<InvariantGlobalization>true</InvariantGlobalization>
+		<FileVersion>1.0.0.0</FileVersion>
+		<AssemblyVersion>1.0.0.0</AssemblyVersion>
+		<NeutralLanguage>pt-BR</NeutralLanguage>
+		<IncludeSymbols>False</IncludeSymbols>
+		<Version>1.0.0</Version>
+		<Authors>GOC</Authors>
+		<Company>By Codaqui Atividade</Company>
+		<PackageId>CalcSharp.MathOperators</PackageId>
+		<Title>CalcSharp Math Operators</Title>
+		<Description>
+			A CalcSharp.MathOperators DLL provides a comprehensive set of mathematical operators and functions
+			for performing arithmetic, algebraic, and trigonometric calculations. This library is designed to
+			be used in various applications requiring advanced mathematical computations.
+		</Description>
+		<PackageTags>math, operators, arithmetic, algebra, trigonometry</PackageTags>
+		<RepositoryUrl>https://github.com/ArtumosGOC/CalcSharp</RepositoryUrl>
+		<ProjectUrl>https://codaqui.dev/</ProjectUrl>
+	</PropertyGroup>
+
+</Project>
