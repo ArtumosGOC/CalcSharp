@@ -90,6 +90,10 @@ namespace CalcSharp
         {
             memory -= value;
         }
+        public static void MemoryAdd(double value)
+        {
+            memory += value;
+        }
 
         public static double MemoryRecall()
         {
