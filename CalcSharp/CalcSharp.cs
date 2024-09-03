@@ -104,5 +104,91 @@ namespace CalcSharp
         {
             memory = 0;
         }
+
+        public static double EvaluateExpression(string expression)
+        {
+            Stack<double> values = new Stack<double>();
+            Stack<char> operators = new Stack<char>();
+            for (int i = 0; i < expression.Length; i++)
+            {
+                if (char.IsWhiteSpace(expression[i]))
+                    continue;
+
+                if (char.IsDigit(expression[i]))
+                {
+                    StringBuilder sb = new StringBuilder();
+                    while (i < expression.Length && (char.IsDigit(expression[i]) || expression[i] == '.'))
+                    {
+                        sb.Append(expression[i++]);
+                    }
+                    values.Push(double.Parse(sb.ToString()));
+                    i--;
+                }
+                else if (expression[i] == '(')
+                {
+                    operators.Push(expression[i]);
+                }
+                else if (expression[i] == ')')
+                {
+                    while (operators.Peek() != '(')
+                    {
+                        values.Push(ApplyOperator(operators.Pop(), values.Pop(), values.Pop()));
+                    }
+                    operators.Pop();
+                }
+                else if (IsOperator(expression[i]))
+                {
+                    while (operators.Count > 0 && Precedence(operators.Peek()) >= Precedence(expression[i]))
+                    {
+                        values.Push(ApplyOperator(operators.Pop(), values.Pop(), values.Pop()));
+                    }
+                    operators.Push(expression[i]);
+                }
+            }
+
+            while (operators.Count > 0)
+            {
+                values.Push(ApplyOperator(operators.Pop(), values.Pop(), values.Pop()));
+            }
+
+            return values.Pop();
+        }
+
+        private static bool IsOperator(char c)
+        {
+            return c == '+' || c == '-' || c == '*' || c == '/';
+        }
+
+        private static int Precedence(char operador)
+        {
+            switch (operador)
+            {
+                case '+':
+                case '-':
+                    return 1;
+                case '*':
+                case '/':
+                    return 2;
+            }
+            return 0;
+        }
+
+        private static double ApplyOperator(char operador, double b, double a)
+        {
+            switch (operador)
+            {
+                case '+':
+                    return Add(a, b);
+                case '-':
+                    return Subtract(a, b);
+                case '*':
+                    return Multiply(a, b);
+                case '/':
+                    return Divide(a, b);
+            }
+            throw new ArgumentException("Operador inválido");
+        }
+
+
     }
 }
