@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -143,6 +144,11 @@ namespace CalcSharp
                         values.Push(ApplyOperator(operators.Pop(), values.Pop(), values.Pop()));
                     }
                     operators.Pop();
+                    
+                    if (i + 1 < expression.Length && (char.IsDigit(expression[i + 1]) || expression[i + 1] == '(' || expression[i + 1] == '!'))
+                    {
+                        operators.Push('*');
+                    }
                 }
                 else if (IsOperator(expression[i]))
                 {
@@ -152,11 +158,27 @@ namespace CalcSharp
                     }
                     operators.Push(expression[i]);
                 }
+                else if (expression[i] == '!')
+                {
+                    double value = values.Pop();
+                    values.Push(Factorial(value));
+                }
             }
 
             while (operators.Count > 0)
             {
-                values.Push(ApplyOperator(operators.Pop(), values.Pop(), values.Pop()));
+                char op = operators.Pop();
+                if (op == '!')
+                {
+                    double value = values.Pop();
+                    values.Push(Factorial(value));
+                }
+                else
+                {
+                    double b = values.Pop();
+                    double a = values.Pop();
+                    values.Push(ApplyOperator(op, b, a));
+                }
             }
 
             return values.Pop();
@@ -164,7 +186,7 @@ namespace CalcSharp
 
         private static bool IsOperator(char c)
         {
-            return c == '+' || c == '-' || c == '*' || c == '/' || c == '^' || c =='%';
+            return c == '+' || c == '-' || c == '*' || c == '/' || c == '^' || c == '%' || c == '!';
         }
 
         private static int Precedence(char operador)
@@ -174,11 +196,16 @@ namespace CalcSharp
                 case '+':
                 case '-':
                     return 1;
+
                 case '*':
                 case '/':
                 case '^':
                 case '%':
                     return 2;
+
+                case '!':
+                    return 3;
+
             }
             return 0;
         }
@@ -199,6 +226,8 @@ namespace CalcSharp
                     return Mod(a, b);
                 case '^':
                     return Pow(a, b);
+                case '!':
+                    return Factorial(a);
             }
             throw new ArgumentException("Operador inválido");
         }
