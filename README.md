@@ -2,13 +2,6 @@
 
 A `CalcSharp.MathOperators` DLL provides a comprehensive set of mathematical operators and functions for performing arithmetic, algebraic, and trigonometric calculations. This library is designed to be used in various applications requiring advanced mathematical computations.
 
-## Features
-
-- Basic arithmetic operations (addition, subtraction, multiplication, division)
-- Algebraic functions
-- Trigonometric functions
-- Advanced mathematical computations
-
 ## Installation
 
 You can install the `CalcSharp.MathOperators` package via NuGet Package Manager or the .NET CLI.
