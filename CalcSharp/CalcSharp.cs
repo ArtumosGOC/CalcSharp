@@ -38,6 +38,14 @@ namespace CalcSharp
         {
             return a % b;
         }
+        public static double Factorial(double a)
+        {
+            if (a == 0)
+            {
+                return 1;
+            }
+            return a * Factorial(a - 1);
+        }
         public static double Pow(double a, double b)
         {
             return Math.Pow(a, b);
@@ -156,7 +164,7 @@ namespace CalcSharp
 
         private static bool IsOperator(char c)
         {
-            return c == '+' || c == '-' || c == '*' || c == '/';
+            return c == '+' || c == '-' || c == '*' || c == '/' || c == '^' || c =='%';
         }
 
         private static int Precedence(char operador)
@@ -168,6 +176,8 @@ namespace CalcSharp
                     return 1;
                 case '*':
                 case '/':
+                case '^':
+                case '%':
                     return 2;
             }
             return 0;
@@ -185,6 +195,10 @@ namespace CalcSharp
                     return Multiply(a, b);
                 case '/':
                     return Divide(a, b);
+                case '%':
+                    return Mod(a, b);
+                case '^':
+                    return Pow(a, b);
             }
             throw new ArgumentException("Operador inválido");
         }
